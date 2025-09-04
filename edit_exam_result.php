@@ -26,7 +26,7 @@ $courses = mysqli_query($conn, "SELECT * FROM courses");
       <option value="<?php echo $c['course_code']; ?>" <?php if($c['course_code']==$row['course_code']) echo "selected"; ?>><?php echo $c['courses_names']; ?></option>
     <?php } ?>
   </select><br>
-  Score: <input type="number" name="score" value="<?php echo $row['score']; ?>"><br>
+  Score: <input type="number" name="score" value="<?php echo $row['point']; ?>"><br>
   <input type="submit" value="Save">
 </form>
 </body>
