@@ -9,7 +9,7 @@ $result = mysqli_query($conn, $sql);
 <h2>Courses</h2>
 <a href="add_course.php">+ Add Course</a>
 <table border="1" cellpadding="5">
-<tr><th>Code</th><th>Name</th><th>Credit</th><th>Action</th></tr>
+<tr><th>Course_code</th><th>Courses_names</th><th>Credit</th><th>Action</th></tr>
 <?php while($row = mysqli_fetch_assoc($result)) { ?>
 <tr>
   <td><?php echo $row["course_code"]; ?></td>

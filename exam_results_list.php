@@ -12,7 +12,7 @@ $result = mysqli_query($conn, $sql);
 <h2>Exam Results</h2>
 <a href="add_exam_result.php">+ Add Exam Result</a>
 <table border="1" cellpadding="5">
-<tr><th>ID</th><th>Student</th><th>Course</th><th>Point</th><th>Action</th></tr>
+<tr><th>ID</th><th>Students_names</th><th>Courses_names</th><th>Point</th><th>Action</th></tr>
 <?php while($row = mysqli_fetch_assoc($result)) { ?>
 <tr>
   <td><?php echo $row["id"]; ?></td>
