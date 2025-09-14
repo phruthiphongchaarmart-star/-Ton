@@ -1,7 +1,19 @@
 <?php
 require("connect_db.php");
-$sql = "SELECT * FROM students";
-$result = mysqli_query($conn, $sql);
+
+// Search
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+if ($search) {
+    $sql = "SELECT * FROM students WHERE student_code LIKE ? OR students_names LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $like = "%$search%";
+    $stmt->bind_param("ss", $like, $like);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} else {
+    $sql = "SELECT * FROM students";
+    $result = mysqli_query($conn, $sql);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +24,6 @@ $result = mysqli_query($conn, $sql);
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
-      padding: 0;
       background: #f5f7fa;
       color: #333;
     }
@@ -25,7 +36,7 @@ $result = mysqli_query($conn, $sql);
     }
     header h2 {
       margin: 0;
-      font-size: 2rem;
+      font-size: 2.2rem;
       animation: fadeDown 1s ease;
     }
     @keyframes fadeDown {
@@ -33,9 +44,17 @@ $result = mysqli_query($conn, $sql);
       to { opacity: 1; transform: translateY(0); }
     }
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 2rem auto;
       padding: 0 1rem;
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .btn {
       display: inline-block;
@@ -44,6 +63,8 @@ $result = mysqli_query($conn, $sql);
       text-decoration: none;
       font-weight: 600;
       transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
     }
     .btn-add {
       background: #22c55e;
@@ -53,10 +74,30 @@ $result = mysqli_query($conn, $sql);
       background: #16a34a;
       transform: scale(1.05);
     }
+    .search-box input {
+      padding: 0.6rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+    }
+    .search-box button {
+      padding: 0.6rem 1rem;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .search-box button:hover {
+      background: #4f46e5;
+      transform: scale(1.05);
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       background: white;
       border-radius: 12px;
       overflow: hidden;
@@ -87,7 +128,7 @@ $result = mysqli_query($conn, $sql);
       padding: 0.4rem 0.8rem;
       margin: 0 2px;
       border-radius: 6px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       text-decoration: none;
       font-weight: 600;
       transition: all 0.3s ease;
@@ -108,14 +149,26 @@ $result = mysqli_query($conn, $sql);
       background: #dc2626;
       transform: scale(1.05);
     }
+    .empty {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h2>👩‍🎓 Students</h2>
+    <h2>👩‍🎓 Students Management</h2>
   </header>
   <div class="container">
-    <a href="add_student.php" class="btn btn-add">+ Add Student</a>
+    <div class="actions">
+      <a href="add_student.php" class="btn btn-add">+ Add Student</a>
+      <form method="GET" class="search-box">
+        <input type="text" name="search" placeholder="Search student..." value="<?php echo htmlspecialchars($search); ?>">
+        <button type="submit">Search</button>
+      </form>
+    </div>
     <table>
       <tr>
         <th>Student Code</th>
@@ -123,17 +176,23 @@ $result = mysqli_query($conn, $sql);
         <th>Gender</th>
         <th>Action</th>
       </tr>
-      <?php while($row = mysqli_fetch_assoc($result)) { ?>
-      <tr>
-        <td><?php echo $row["student_code"]; ?></td>
-        <td><?php echo $row["students_names"]; ?></td>
-        <td><?php echo $row["gender"]; ?></td>
-        <td>
-          <a href="edit_student.php?student_code=<?php echo $row['student_code']; ?>" class="btn-action btn-edit">Edit</a>
-          <a href="delete_student.php?student_code=<?php echo $row['student_code']; ?>" class="btn-action btn-delete" onclick="return confirm('Delete student?');">Delete</a>
-        </td>
-      </tr>
-      <?php } ?>
+      <?php if(mysqli_num_rows($result) > 0): ?>
+        <?php while($row = mysqli_fetch_assoc($result)) { ?>
+        <tr>
+          <td><?php echo htmlspecialchars($row["student_code"]); ?></td>
+          <td><?php echo htmlspecialchars($row["students_names"]); ?></td>
+          <td><?php echo htmlspecialchars($row["gender"]); ?></td>
+          <td>
+            <a href="edit_student.php?student_code=<?php echo urlencode($row['student_code']); ?>" class="btn-action btn-edit">Edit</a>
+            <a href="delete_student.php?student_code=<?php echo urlencode($row['student_code']); ?>" class="btn-action btn-delete" onclick="return confirm('Delete student?');">Delete</a>
+          </td>
+        </tr>
+        <?php } ?>
+      <?php else: ?>
+        <tr>
+          <td colspan="4" class="empty">No students found.</td>
+        </tr>
+      <?php endif; ?>
     </table>
   </div>
 </body>
