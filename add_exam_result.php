@@ -5,6 +5,7 @@ $courses = mysqli_query($conn, "SELECT * FROM course");
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Add Exam Result</title>
@@ -15,34 +16,26 @@ $courses = mysqli_query($conn, "SELECT * FROM course");
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(120deg, #6366f1, #a855f7, #ec4899);
-      background-size: 300% 300%;
-      animation: gradientMove 10s ease infinite;
+      background: #f0f4f8;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
     .form-container {
-      background: rgba(255,255,255,0.95);
+      background: #ffffff;
       padding: 2rem;
       border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 450px;
-      animation: fadeIn 1s ease-out;
+      animation: fadeIn 0.8s ease-out;
     }
 
     h2 {
       text-align: center;
-      color: #4f46e5;
+      color: #26a69a;
       margin-bottom: 1.5rem;
     }
 
@@ -50,29 +43,31 @@ $courses = mysqli_query($conn, "SELECT * FROM course");
       display: block;
       margin: 0.8rem 0 0.3rem;
       font-weight: 600;
-      color: #333;
+      color: #2e3440;
     }
 
-    select, input[type="number"] {
+    input[type="text"],
+    input[type="number"] {
       width: 100%;
       padding: 0.8rem;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 1rem;
-      transition: border 0.2s;
-      margin-bottom: 1rem;
+      transition: border 0.2s, box-shadow 0.2s;
     }
 
-    select:focus, input[type="number"]:focus {
-      border-color: #6366f1;
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      border-color: #26a69a;
+      box-shadow: 0 0 5px rgba(38, 166, 154, 0.3);
       outline: none;
     }
 
     .btn-save {
       width: 100%;
-      margin-top: 0.5rem;
+      margin-top: 1.5rem;
       padding: 0.8rem;
-      background: #4f46e5;
+      background: #26a69a;
       color: #fff;
       border: none;
       border-radius: 8px;
@@ -83,30 +78,38 @@ $courses = mysqli_query($conn, "SELECT * FROM course");
     }
 
     .btn-save:hover {
-      background: #3730a3;
+      background: #1e867d;
       transform: scale(1.05);
     }
 
     @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="form-container">
     <h2>➕ Add Exam Result</h2>
     <form action="save_add_exam_result.php" method="post">
-      <label for="student_code">Student:</label>
+      <label for="student_code">Student Name:</label>
       <select id="student_code" name="student_code" required>
-        <?php while($s = mysqli_fetch_assoc($students)) { ?>
+        <?php while ($s = mysqli_fetch_assoc($students)) { ?>
           <option value="<?php echo $s['student_code']; ?>"><?php echo $s['students_names']; ?></option>
         <?php } ?>
       </select>
 
       <label for="course_code">Course:</label>
       <select id="course_code" name="course_code" required>
-        <?php while($c = mysqli_fetch_assoc($courses)) { ?>
+        <?php while ($c = mysqli_fetch_assoc($courses)) { ?>
           <option value="<?php echo $c['course_code']; ?>"><?php echo $c['courses_names']; ?></option>
         <?php } ?>
       </select>
@@ -118,4 +121,5 @@ $courses = mysqli_query($conn, "SELECT * FROM course");
     </form>
   </div>
 </body>
+
 </html>

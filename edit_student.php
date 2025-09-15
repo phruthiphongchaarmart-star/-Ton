@@ -7,78 +7,97 @@ $row = mysqli_fetch_assoc($result);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Edit Student</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #6366f1, #a855f7);
+      background: #f0f4f8;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #333;
     }
-    .card {
-      background: #fff;
-      border-radius: 16px;
+
+    .form-container {
+      background: #ffffff;
       padding: 2rem;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       width: 100%;
-      max-width: 420px;
-      animation: fadeIn 0.8s ease;
+      max-width: 450px;
+      animation: fadeIn 0.8s ease-out;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+
     h2 {
-      margin-top: 0;
-      color: #4f46e5;
       text-align: center;
+      color: #26a69a;
       margin-bottom: 1.5rem;
     }
+
     label {
       display: block;
+      margin: 0.8rem 0 0.3rem;
       font-weight: 600;
-      margin-bottom: 0.3rem;
-      color: #555;
+      color: #2e3440;
     }
-    input[type="text"], input[type="hidden"] {
-      width: 100%;
-      padding: 0.7rem 1rem;
-      margin-bottom: 1rem;
-      border: 2px solid #e5e7eb;
-      border-radius: 10px;
-      font-size: 1rem;
-      transition: border 0.3s, box-shadow 0.3s;
-    }
-    input[type="text"]:focus {
-      border-color: #6366f1;
-      box-shadow: 0 0 6px rgba(99,102,241,0.5);
-      outline: none;
-    }
-    .btn-save {
+
+    input[type="text"],
+    input[type="number"] {
       width: 100%;
       padding: 0.8rem;
-      background: #6366f1;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      border-color: #26a69a;
+      box-shadow: 0 0 5px rgba(38, 166, 154, 0.3);
+      outline: none;
+    }
+
+    .btn-save {
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 0.8rem;
+      background: #26a69a;
+      color: #fff;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       font-size: 1rem;
       font-weight: 600;
-      color: white;
       cursor: pointer;
       transition: background 0.3s, transform 0.2s;
     }
+
     .btn-save:hover {
-      background: #4f46e5;
-      transform: scale(1.03);
+      background: #1e867d;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="card">
     <h2>✏️ Edit Student</h2>
@@ -98,4 +117,5 @@ $row = mysqli_fetch_assoc($result);
     </form>
   </div>
 </body>
+
 </html>

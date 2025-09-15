@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Add Course</title>
@@ -10,34 +11,26 @@
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(120deg, #6366f1, #a855f7, #ec4899);
-      background-size: 300% 300%;
-      animation: gradientMove 10s ease infinite;
+      background: #f0f4f8;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
     .form-container {
-      background: rgba(255,255,255,0.95);
+      background: #ffffff;
       padding: 2rem;
       border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 450px;
-      animation: fadeIn 1s ease-out;
+      animation: fadeIn 0.8s ease-out;
     }
 
     h2 {
       text-align: center;
-      color: #4f46e5;
+      color: #26a69a;
       margin-bottom: 1.5rem;
     }
 
@@ -45,7 +38,7 @@
       display: block;
       margin: 0.8rem 0 0.3rem;
       font-weight: 600;
-      color: #333;
+      color: #2e3440;
     }
 
     input[type="text"],
@@ -55,12 +48,13 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 1rem;
-      transition: border 0.2s;
+      transition: border 0.2s, box-shadow 0.2s;
     }
 
     input[type="text"]:focus,
     input[type="number"]:focus {
-      border-color: #6366f1;
+      border-color: #26a69a;
+      box-shadow: 0 0 5px rgba(38, 166, 154, 0.3);
       outline: none;
     }
 
@@ -68,7 +62,7 @@
       width: 100%;
       margin-top: 1.5rem;
       padding: 0.8rem;
-      background: #4f46e5;
+      background: #26a69a;
       color: #fff;
       border: none;
       border-radius: 8px;
@@ -79,16 +73,24 @@
     }
 
     .btn-save:hover {
-      background: #3730a3;
+      background: #1e867d;
       transform: scale(1.05);
     }
 
     @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="form-container">
     <h2>➕ Add Course</h2>
@@ -96,7 +98,7 @@
       <label for="course_code">Course Code:</label>
       <input type="text" id="course_code" name="course_code" required>
 
-      <label for="courses_names">Name:</label>
+      <label for="courses_names">Course Name:</label>
       <input type="text" id="courses_names" name="courses_names" required>
 
       <label for="credit">Credit:</label>
@@ -106,4 +108,5 @@
     </form>
   </div>
 </body>
+
 </html>
