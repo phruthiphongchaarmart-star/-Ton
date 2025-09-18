@@ -9,79 +9,96 @@ $courses = mysqli_query($conn, "SELECT * FROM course");
 <head>
   <meta charset="UTF-8">
   <title>Add Exam Result</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-    body {
-      font-family: 'Poppins', sans-serif;
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: #f0f4f8;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
+    /* Form Container */
     .form-container {
       background: #ffffff;
-      padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
       width: 100%;
-      max-width: 450px;
+      max-width: 480px;
       animation: fadeIn 0.8s ease-out;
+      transition: transform 0.2s;
+    }
+
+    .form-container:hover {
+      transform: translateY(-5px);
     }
 
     h2 {
       text-align: center;
-      color: #26a69a;
-      margin-bottom: 1.5rem;
+      color: #00796b;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
     }
 
     label {
       display: block;
       margin: 0.8rem 0 0.3rem;
       font-weight: 600;
-      color: #2e3440;
+      color: #37474f;
+      font-size: 0.95rem;
     }
 
-    input[type="text"],
+    select,
     input[type="number"] {
       width: 100%;
-      padding: 0.8rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      border: 1px solid #cfd8dc;
+      border-radius: 12px;
       font-size: 1rem;
-      transition: border 0.2s, box-shadow 0.2s;
+      transition: all 0.3s ease;
     }
 
-    input[type="text"]:focus,
+    select:focus,
     input[type="number"]:focus {
-      border-color: #26a69a;
-      box-shadow: 0 0 5px rgba(38, 166, 154, 0.3);
+      border-color: #00796b;
+      box-shadow: 0 0 8px rgba(0, 121, 107, 0.3);
       outline: none;
     }
 
+    /* Button */
     .btn-save {
       width: 100%;
-      margin-top: 1.5rem;
-      padding: 0.8rem;
-      background: #26a69a;
-      color: #fff;
+      margin-top: 1.8rem;
+      padding: 0.85rem;
+      background: #00796b;
+      color: #ffffff;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
+      transition: all 0.3s ease;
     }
 
     .btn-save:hover {
-      background: #1e867d;
-      transform: scale(1.05);
+      background: #004d40;
+      transform: scale(1.03);
     }
 
+    /* Animations */
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -114,8 +131,8 @@ $courses = mysqli_query($conn, "SELECT * FROM course");
         <?php } ?>
       </select>
 
-      <label for="score">point:</label>
-      <input type="number" id="score" name="score" required>
+      <label for="score">Point:</label>
+      <input type="number" id="score" name="score" required min="0" step="1">
 
       <button type="submit" class="btn-save">💾 Save</button>
     </form>
