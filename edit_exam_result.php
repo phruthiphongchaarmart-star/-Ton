@@ -5,8 +5,8 @@ $sql = "SELECT * FROM exam_result WHERE id='$id'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 
-$students = mysqli_query($conn, "SELECT * FROM students");
-$courses = mysqli_query($conn, "SELECT * FROM course");
+$student = mysqli_fetch_assoc(mysqli_query($conn, "SELECT students_names FROM students WHERE student_code='".$row['student_code']."'"));
+$course = mysqli_fetch_assoc(mysqli_query($conn, "SELECT courses_names FROM course WHERE course_code='".$row['course_code']."'"));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,7 +92,6 @@ $courses = mysqli_query($conn, "SELECT * FROM course");
         opacity: 0;
         transform: translateY(20px);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
@@ -107,23 +106,11 @@ $courses = mysqli_query($conn, "SELECT * FROM course");
     <form action="save_edit_exam_result.php" method="post">
       <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 
-      <label for="student_code">Student:</label>
-      <select id="student_code" name="student_code" required>
-        <?php while ($s = mysqli_fetch_assoc($students)) { ?>
-          <option value="<?php echo $s['student_code']; ?>" <?php if ($s['student_code'] == $row['student_code']) echo "selected"; ?>>
-            <?php echo $s['students_names']; ?>
-          </option>
-        <?php } ?>
-      </select>
+      <label>Student:</label>
+      <input type="text" value="<?php echo $student['students_names']; ?>" disabled>
 
-      <label for="course_code">Course:</label>
-      <select id="course_code" name="course_code" required>
-        <?php while ($c = mysqli_fetch_assoc($courses)) { ?>
-          <option value="<?php echo $c['course_code']; ?>" <?php if ($c['course_code'] == $row['course_code']) echo "selected"; ?>>
-            <?php echo $c['courses_names']; ?>
-          </option>
-        <?php } ?>
-      </select>
+      <label>Course:</label>
+      <input type="text" value="<?php echo $course['courses_names']; ?>" disabled>
 
       <label for="score">Point:</label>
       <input type="number" id="score" name="score" value="<?php echo $row['point']; ?>" required>
@@ -132,5 +119,4 @@ $courses = mysqli_query($conn, "SELECT * FROM course");
     </form>
   </div>
 </body>
-
 </html>
