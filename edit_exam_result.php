@@ -1,0 +1,132 @@
+<?php
+require("connect_db.php");
+$id = $_GET["id"];
+$sql = "SELECT er.id, er.student_code, er.course_code, er.point, s.students_names, c.courses_names
+        FROM exam_result_new er
+        JOIN students s ON er.student_code = s.student_code
+        JOIN course c ON er.course_code = c.course_code
+        WHERE er.id='$id'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Exam Result</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f4f8;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    h2 {
+      text-align: center;
+      color: #26a69a;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.8rem 0 0.3rem;
+      font-weight: 600;
+      color: #2e3440;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      border-color: #26a69a;
+      box-shadow: 0 0 5px rgba(38, 166, 154, 0.3);
+      outline: none;
+    }
+
+    input[readonly] {
+      background-color: #e0e0e0;
+      cursor: not-allowed;
+    }
+
+    .btn-save {
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 0.8rem;
+      background: #26a69a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn-save:hover {
+      background: #1e867d;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-container">
+    <h2>✏️ Edit Exam Result</h2>
+    <form action="save_edit_exam_result.php" method="post">
+      <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+      <input type="hidden" name="student_code" value="<?php echo $row['student_code']; ?>">
+      <input type="hidden" name="course_code" value="<?php echo $row['course_code']; ?>">
+
+      <label>Student:</label>
+      <input type="text" value="<?php echo $row['student_code'] . ' - ' . $row['students_names']; ?>" readonly>
+
+      <label>Course:</label>
+      <input type="text" value="<?php echo $row['course_code'] . ' - ' . $row['courses_names']; ?>" readonly>
+
+      <label>Point:</label>
+      <input type="number" name="score" value="<?php echo $row['point']; ?>" required>
+
+      <button type="submit" class="btn-save">💾 Save</button>
+    </form>
+  </div>
+</body>
+
+</html>
